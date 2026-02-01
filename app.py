@@ -10,24 +10,24 @@ from googleapiclient.discovery import build
 PRODUCTS = {
     "Full bộ 50 Preset Mobile & PC": [
         {
-            "name": "Folder Mobile (Dành cho điện thoại)",
+            "name": "Preset DNG (Dành cho điện thoại)",
             "folder_id": "1ty9bxR7P6VEXSJxeeSFYpWdexNnCwkgS", 
             "link": "https://drive.google.com/drive/folders/1ty9bxR7P6VEXSJxeeSFYpWdexNnCwkgS?usp=sharing"
         },
         {
-            "name": "Folder PC (Dành cho máy tính)",
+            "name": "Preset XMP (Dành cho máy tính)",
             "folder_id": "1Qv2oGjYDa2X0RkxHqapwt1z-y8nP7ChG",
             "link": "https://drive.google.com/file/d/1Qv2oGjYDa2X0RkxHqapwt1z-y8nP7ChG/view?usp=sharing"
         }
     ],
     "Bộ 36 Preset Best seller Mobile & PC": [
         {
-            "name": "Folder Mobile Best Seller",
+            "name": "Preset DNG (Dành cho điện thoại)",
             "folder_id": "1xaMdIzxfZYsmyC44Tjric4GUlgqje8sC",
             "link": "https://drive.google.com/drive/folders/1xaMdIzxfZYsmyC44Tjric4GUlgqje8sC?usp=sharing"
         },
         {
-            "name": "Folder PC Best Seller",
+            "name": "Preset XMP (Dành cho máy tính)",
             "folder_id": "1bS_qEbU5UMr-zY01SB6aX8s2QEtiTGcp",
             "link": "https://drive.google.com/file/d/1bS_qEbU5UMr-zY01SB6aX8s2QEtiTGcp/view?usp=sharing"
         }
@@ -74,7 +74,7 @@ def create_html_content(customer_email, product_items):
         drive_cards_html += f"""
         <div style="background-color: #f8f9fa; border: 1px solid #dadce0; border-radius: 8px; padding: 15px; margin-bottom: 10px; width: fit-content; min-width: 300px;">
             <div style="display: flex; align-items: center;">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/d/da/Google_Drive_logo_%282020-present%29.svg" width="24" style="margin-right: 12px;">
+                <img src="file:///C:/Users/TRung/OneDrive%20-%20%C4%90%E1%BA%A1i%20h%E1%BB%8Dc%20Giao%20th%C3%B4ng%20v%E1%BA%ADn%20t%E1%BA%A3i/Pictures/brand.jpg" width="24" style="margin-right: 12px;">
                 <div>
                     <div style="font-weight: 500; font-size: 14px; color: #202124;">{item['name']}</div>
                     <div style="font-size: 12px; color: #5f6368;">Google Drive • Đã cấp quyền cho {customer_email}</div>
@@ -93,7 +93,7 @@ def create_html_content(customer_email, product_items):
         
         {drive_cards_html}
 
-        <p><strong>Cảm ơn bạn đã ủng hộ sản phẩm team mình!!!</strong></p>
+        <h2><strong>Cảm ơn bạn đã ủng hộ sản phẩm team mình!!!</strong></h2>
         
         <p>Để chọn ảnh phù hợp với preset cũng như chỉnh lại thế nào cho hợp lý thì bạn đọc phần note trong từng preset ở đây nhe: 
         <a href="{LINK_NOTE}">Xem Note Hướng Dẫn</a></p>
@@ -181,4 +181,5 @@ with st.form("email_form"):
                     st.balloons()
                 else:
                     st.error(f"❌ {message}")
+
 
