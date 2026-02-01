@@ -6,82 +6,147 @@ from email.mime.multipart import MIMEMultipart
 from google.oauth2 import service_account
 from googleapiclient.discovery import build
 
-# --- CẤU HÌNH SẢN PHẨM ---
-# folder_id: Là đoạn mã cuối link drive folder
+# --- CẤU HÌNH SẢN PHẨM (MỖI SẢN PHẨM LÀ 1 DANH SÁCH 2 FOLDER) ---
 PRODUCTS = {
-    "Full bộ 50 Preset Mobile": {
-        "folder_id": "1ty9bxR7P6VEXSJxeeSFYpWdexNnCwkgS", 
-        "link": "https://drive.google.com/drive/folders/1ty9bxR7P6VEXSJxeeSFYpWdexNnCwkgS?usp=sharing",
-        "subject": "Gửi bạn bộ 50 Preset Mobile - Trung Dinh"
-    },
-    "Bộ Full Presets PC": {
-        "folder_id": "1Qv2oGjYDa2X0RkxHqapwt1z-y8nP7ChG",
-        "link": "https://drive.google.com/file/d/1Qv2oGjYDa2X0RkxHqapwt1z-y8nP7ChG/view?usp=sharing",
-        "subject": "Gửi bạn bộ Full Presets PC - Trung Dinh"
-    }
+    "Full bộ 50 Preset Mobile & PC": [
+        {
+            "name": "Folder Mobile (Dành cho điện thoại)",
+            "folder_id": "PASTE_ID_FOLDER_MOBILE_50_VAO_DAY", 
+            "link": "https://drive.google.com/drive/folders/PASTE_ID_FOLDER_MOBILE_50_VAO_DAY"
+        },
+        {
+            "name": "Folder PC (Dành cho máy tính)",
+            "folder_id": "PASTE_ID_FOLDER_PC_50_VAO_DAY",
+            "link": "https://drive.google.com/drive/folders/PASTE_ID_FOLDER_PC_50_VAO_DAY"
+        }
+    ],
+    "Bộ 36 Preset Best seller Mobile & PC": [
+        {
+            "name": "Folder Mobile Best Seller",
+            "folder_id": "PASTE_ID_FOLDER_MOBILE_36_VAO_DAY",
+            "link": "https://drive.google.com/drive/folders/PASTE_ID_FOLDER_MOBILE_36_VAO_DAY"
+        },
+        {
+            "name": "Folder PC Best Seller",
+            "folder_id": "PASTE_ID_FOLDER_PC_36_VAO_DAY",
+            "link": "https://drive.google.com/drive/folders/PASTE_ID_FOLDER_PC_36_VAO_DAY"
+        }
+    ]
 }
 
-DISPLAY_NAME = "Trung Dinh"
-NOTE_LINK = "https://photos.app.goo.gl/LINK_NOTE"
-VIDEO_LINK = "https://tiktok.com/LINK_VIDEO"
+DISPLAY_NAME = "Trung's Preset" # Đã đổi theo yêu cầu
+
+# --- CẤU HÌNH LINK TRONG NỘI DUNG MAIL ---
+LINK_NOTE = "https://photos.app.goo.gl/xA2x3gRcLWKsXQMAA" # Link từ ảnh sếp
+LINK_VIDEO_TIKTOK = "https://www.tiktok.com/" # Sếp điền link tiktok vào đây
+LINK_VIDEO_HUONG_DAN_MOBILE = "https://youtube.com/" # Sếp điền link video mobile
+LINK_VIDEO_HUONG_DAN_PC = "https://youtube.com/" # Sếp điền link video PC
 
 # --- HÀM 1: RA LỆNH ROBOT CẤP QUYỀN ---
 def add_user_to_drive(customer_email, folder_id):
     try:
-        # Lấy thông tin Robot từ Secrets
         key_dict = json.loads(st.secrets["GCP_JSON"])
         creds = service_account.Credentials.from_service_account_info(
             key_dict, scopes=['https://www.googleapis.com/auth/drive']
         )
         service = build('drive', 'v3', credentials=creds)
 
-        # Cấu hình quyền: role='reader' (chỉ xem/tải), type='user'
         user_permission = {
             'type': 'user',
             'role': 'reader',
             'emailAddress': customer_email
         }
         
-        # Thực hiện lệnh add
         service.permissions().create(
             fileId=folder_id,
             body=user_permission,
             fields='id',
         ).execute()
-        return True, "Đã cấp quyền Drive"
+        return True, ""
     except Exception as e:
         return False, str(e)
 
-# --- HÀM 2: GỬI MAIL (NHƯ CŨ) ---
-def create_html_content(customer_name, product_name, drive_link):
-    # (Giữ nguyên HTML template như bài trước cho gọn code)
-    # Sếp copy lại đoạn HTML template ở bài trước dán vào đây nhé
+# --- HÀM 2: TẠO NỘI DUNG HTML (CHUẨN FORM ẢNH) ---
+def create_html_content(customer_email, product_items):
+    # Tạo danh sách các thẻ Drive (Card)
+    drive_cards_html = ""
+    for item in product_items:
+        drive_cards_html += f"""
+        <div style="background-color: #f8f9fa; border: 1px solid #dadce0; border-radius: 8px; padding: 15px; margin-bottom: 10px; width: fit-content; min-width: 300px;">
+            <div style="display: flex; align-items: center;">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/d/da/Google_Drive_logo_%282020-present%29.svg" width="24" style="margin-right: 12px;">
+                <div>
+                    <div style="font-weight: 500; font-size: 14px; color: #202124;">{item['name']}</div>
+                    <div style="font-size: 12px; color: #5f6368;">Google Drive • Đã cấp quyền cho {customer_email}</div>
+                </div>
+            </div>
+            <div style="margin-top: 12px; padding-top: 10px; border-top: 1px solid #ececec;">
+                <a href="{item['link']}" style="text-decoration: none; color: #1a73e8; font-weight: bold; font-size: 14px;">MỞ THƯ MỤC ➔</a>
+            </div>
+        </div>
+        """
+
+    # Nội dung Text y hệt trong ảnh Sếp gửi
     return f"""
-    <html><body>
-    <h3>Chào bạn, cảm ơn đã mua {product_name}</h3>
-    <p>Mình đã cấp quyền truy cập cho email <b>{customer_name}</b>.</p>
-    <a href="{drive_link}">BẤM VÀO ĐÂY ĐỂ TẢI</a>
-    <br><br>
-    <p>{DISPLAY_NAME}</p>
-    </body></html>
+    <html>
+      <body style="font-family: Arial, sans-serif; line-height: 1.6; color: #222;">
+        
+        {drive_cards_html}
+
+        <p><strong>Cảm ơn bạn đã ủng hộ sản phẩm team mình!!!</strong></p>
+        
+        <p>Để chọn ảnh phù hợp với preset cũng như chỉnh lại thế nào cho hợp lý thì bạn đọc phần note trong từng preset ở đây nhe: 
+        <a href="{LINK_NOTE}">Xem Note Hướng Dẫn</a></p>
+        
+        <p>Để sử dụng preset hiệu quả thì bạn cần có kiến thức chỉnh màu cơ bản vì vậy mình đang làm một chuỗi video hướng dẫn cách sử dụng các công cụ trong lightroom bạn có thể xem nó ở đây nhe: 
+        <a href="{LINK_VIDEO_TIKTOK}">Tiktok Video</a></p>
+        
+        <p style="color: #673ab7;">Đối với mobile, bạn tải từng file trong mục Preset for mobile về rồi làm theo Video hướng dẫn đây nhe: 
+        <a href="{LINK_VIDEO_HUONG_DAN_MOBILE}">Video hướng dẫn</a></p>
+        
+        <p style="color: #673ab7;">(Lưu ý: File có đuôi .zip là dành cho máy tính)<br>
+        Video hướng dẫn cách cài PC: <a href="{LINK_VIDEO_HUONG_DAN_PC}">Click vào đây nhe</a></p>
+        
+        <p>Ngoài cung cấp preset thì:</p>
+        <ul style="list-style-type: - ;">
+            <li>Mình có nhận chỉnh màu theo yêu cầu với mức giá từ 25-80k tùy vào độ khó của màu.</li>
+            <li>Hỗ trợ cài bản crack các app của adobe ( sử dụng vĩnh viễn ). Chi tiết liên hệ zalo: <strong>0762042093</strong>.</li>
+            <li>Panel retouch ảnh.</li>
+        </ul>
+
+        <p>Nếu bạn có nhu cầu học chỉnh màu ảnh thì mình có thể giới thiệu bạn với chỗ lúc trước mình chỉnh màu (do mình giới thiệu sẽ được giảm học phí thêm nhe), khóa học sẽ dạy về công cụ trong lightroom, camera raw, cách phối màu, tư duy chỉnh màu ảnh, đây cũng đều là kiến thức nền tảng để giúp bạn chỉnh được mọi tone màu bạn muốn. Còn nếu bạn đã nắm chắc những phần đó rồi thì cũng sẽ có khóa nâng cao hơn để bạn học chỉnh màu chuyên sâu nhe, nếu cần thì liên hệ với mình qua số zalo trên nhé!!!</p>
+        
+        <br>
+        <p>Trân trọng,<br>
+        <strong>Trung's Preset</strong></p>
+      </body>
+    </html>
     """
 
 def send_email(to_email, product_key, gmail_user, gmail_password):
-    product_info = PRODUCTS[product_key]
+    # Lấy danh sách các folder cần gửi (1 gói có thể có nhiều folder)
+    product_items = PRODUCTS[product_key]
     
-    # BƯỚC 1: CẤP QUYỀN DRIVE TRƯỚC
-    drive_success, drive_msg = add_user_to_drive(to_email, product_info['folder_id'])
+    # BƯỚC 1: CẤP QUYỀN DRIVE CHO TỪNG FOLDER
+    # Chạy vòng lặp để cấp quyền cho cả Mobile và PC
+    errors = []
+    for item in product_items:
+        success, msg = add_user_to_drive(to_email, item['folder_id'])
+        if not success:
+            errors.append(f"Lỗi folder {item['name']}: {msg}")
     
-    if not drive_success:
-        return False, f"Lỗi cấp quyền Drive: {drive_msg}"
+    # Nếu có lỗi cấp quyền thì dừng và báo ngay
+    if errors:
+        return False, " | ".join(errors)
 
-    # BƯỚC 2: NẾU CẤP QUYỀN OK THÌ GỬI MAIL
+    # BƯỚC 2: GỬI MAIL
     try:
-        html_content = create_html_content(to_email, product_key, product_info['link'])
+        html_content = create_html_content(to_email, product_items)
+        
         msg = MIMEMultipart('alternative')
         msg['From'] = f"{DISPLAY_NAME} <{gmail_user}>"
         msg['To'] = to_email
-        msg['Subject'] = product_info['subject']
+        msg['Subject'] = f"Gửi bạn {product_key} - {DISPLAY_NAME}"
         msg.attach(MIMEText(html_content, 'html'))
 
         server = smtplib.SMTP('smtp.gmail.com', 587)
@@ -89,13 +154,13 @@ def send_email(to_email, product_key, gmail_user, gmail_password):
         server.login(gmail_user, gmail_password)
         server.sendmail(gmail_user, to_email, msg.as_string())
         server.quit()
-        return True, "Thành công! Đã cấp quyền & Gửi mail."
+        return True, "Thành công! Đã cấp quyền cả 2 folder & Gửi mail."
     except Exception as e:
         return False, f"Lỗi gửi mail: {str(e)}"
 
 # --- GIAO DIỆN ---
-st.set_page_config(page_title="Tool Gửi Hàng VIP", page_icon="🔐")
-st.title("🔐 Tool Gửi Hàng Bảo Mật")
+st.set_page_config(page_title="Tool Gửi Preset", page_icon="📸")
+st.title("📸 Tool Gửi Preset - Trung's Preset")
 
 with st.form("email_form"):
     customer_email = st.text_input("Email Khách Hàng")
@@ -106,7 +171,7 @@ with st.form("email_form"):
         if not customer_email or "@" not in customer_email:
              st.error("⚠️ Email sai rồi Sếp!")
         else:
-            with st.spinner(f"Đang cấp quyền Drive cho {customer_email}..."):
+            with st.spinner(f"Đang xử lý gói '{option}' cho {customer_email}..."):
                 MY_EMAIL = st.secrets["GMAIL_USERNAME"]
                 MY_PASSWORD = st.secrets["GMAIL_PASSWORD"]
                 success, message = send_email(customer_email, option, MY_EMAIL, MY_PASSWORD)
