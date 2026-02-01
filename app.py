@@ -11,25 +11,25 @@ PRODUCTS = {
     "Full bộ 50 Preset Mobile & PC": [
         {
             "name": "Folder Mobile (Dành cho điện thoại)",
-            "folder_id": "PASTE_ID_FOLDER_MOBILE_50_VAO_DAY", 
-            "link": "https://drive.google.com/drive/folders/PASTE_ID_FOLDER_MOBILE_50_VAO_DAY"
+            "folder_id": "1ty9bxR7P6VEXSJxeeSFYpWdexNnCwkgS", 
+            "link": "https://drive.google.com/drive/folders/1ty9bxR7P6VEXSJxeeSFYpWdexNnCwkgS?usp=sharing"
         },
         {
             "name": "Folder PC (Dành cho máy tính)",
-            "folder_id": "PASTE_ID_FOLDER_PC_50_VAO_DAY",
-            "link": "https://drive.google.com/drive/folders/PASTE_ID_FOLDER_PC_50_VAO_DAY"
+            "folder_id": "1Qv2oGjYDa2X0RkxHqapwt1z-y8nP7ChG",
+            "link": "https://drive.google.com/file/d/1Qv2oGjYDa2X0RkxHqapwt1z-y8nP7ChG/view?usp=sharing"
         }
     ],
     "Bộ 36 Preset Best seller Mobile & PC": [
         {
             "name": "Folder Mobile Best Seller",
-            "folder_id": "PASTE_ID_FOLDER_MOBILE_36_VAO_DAY",
-            "link": "https://drive.google.com/drive/folders/PASTE_ID_FOLDER_MOBILE_36_VAO_DAY"
+            "folder_id": "1xaMdIzxfZYsmyC44Tjric4GUlgqje8sC",
+            "link": "https://drive.google.com/drive/folders/1xaMdIzxfZYsmyC44Tjric4GUlgqje8sC?usp=sharing"
         },
         {
             "name": "Folder PC Best Seller",
-            "folder_id": "PASTE_ID_FOLDER_PC_36_VAO_DAY",
-            "link": "https://drive.google.com/drive/folders/PASTE_ID_FOLDER_PC_36_VAO_DAY"
+            "folder_id": "1bS_qEbU5UMr-zY01SB6aX8s2QEtiTGcp",
+            "link": "https://drive.google.com/file/d/1bS_qEbU5UMr-zY01SB6aX8s2QEtiTGcp/view?usp=sharing"
         }
     ]
 }
@@ -38,9 +38,9 @@ DISPLAY_NAME = "Trung's Preset" # Đã đổi theo yêu cầu
 
 # --- CẤU HÌNH LINK TRONG NỘI DUNG MAIL ---
 LINK_NOTE = "https://photos.app.goo.gl/xA2x3gRcLWKsXQMAA" # Link từ ảnh sếp
-LINK_VIDEO_TIKTOK = "https://www.tiktok.com/" # Sếp điền link tiktok vào đây
-LINK_VIDEO_HUONG_DAN_MOBILE = "https://youtube.com/" # Sếp điền link video mobile
-LINK_VIDEO_HUONG_DAN_PC = "https://youtube.com/" # Sếp điền link video PC
+LINK_VIDEO_TIKTOK = "https://www.tiktok.com/@trung_lightroom/video/7385215457105562898?is_from_webapp=1&sender_device=pc&web_id=7177406567393134081" # Sếp điền link tiktok vào đây
+LINK_VIDEO_HUONG_DAN_MOBILE = "https://www.tiktok.com/@trung_lightroom/video/7275748130144931074?" # Sếp điền link video mobile
+LINK_VIDEO_HUONG_DAN_PC = "https://www.tiktok.com/@trung_lightroom/video/7570758078954605845?is_from_webapp=1&sender_device=pc&web_id=7177406567393134081" # Sếp điền link video PC
 
 # --- HÀM 1: RA LỆNH ROBOT CẤP QUYỀN ---
 def add_user_to_drive(customer_email, folder_id):
@@ -181,3 +181,4 @@ with st.form("email_form"):
                     st.balloons()
                 else:
                     st.error(f"❌ {message}")
+
