@@ -61,6 +61,7 @@ def add_user_to_drive(customer_email, folder_id):
             fileId=folder_id,
             body=user_permission,
             fields='id',
+            sendNotificationEmail=False
         ).execute()
         return True, ""
     except Exception as e:
@@ -74,7 +75,7 @@ def create_html_content(customer_email, product_items):
         drive_cards_html += f"""
         <div style="background-color: #f8f9fa; border: 1px solid #dadce0; border-radius: 8px; padding: 15px; margin-bottom: 10px; width: fit-content; min-width: 300px;">
             <div style="display: flex; align-items: center;">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/b/b6/Adobe_Photoshop_Lightroom_CC_logo.svg" width="24" style="margin-right: 12px;">
+                <img src="https://yt3.googleusercontent.com/eBkA-whuMHCHR3s1GCIKUdAloMVgohvvPBTufiIc0rPUd2AlyP4UeV52ubGAF76RIUqP8GFOAQ=s900-c-k-c0x00ffffff-no-rj" width="24" style="margin-right: 12px;">
                 <div>
                     <div style="font-weight: 500; font-size: 14px; color: #202124;">{item['name']}</div>
                     <div style="font-size: 12px; color: #5f6368;">Google Drive • Đã cấp quyền cho {customer_email}</div>
@@ -93,7 +94,7 @@ def create_html_content(customer_email, product_items):
         
         {drive_cards_html}
 
-        <h3><strong>Cảm ơn bạn đã ủng hộ sản phẩm team mình!!!</strong></h3>
+        <p><strong>Cảm ơn bạn đã ủng hộ sản phẩm team mình!!!</strong></p>
         
         <p>Để chọn ảnh phù hợp với preset cũng như chỉnh lại thế nào cho hợp lý thì bạn đọc phần note trong từng preset ở đây nhe: 
         <a href="{LINK_NOTE}">Xem Note Hướng Dẫn</a></p>
@@ -181,6 +182,7 @@ with st.form("email_form"):
                     st.balloons()
                 else:
                     st.error(f"❌ {message}")
+
 
 
 
