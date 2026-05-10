@@ -38,7 +38,7 @@ DISPLAY_NAME = "Trung's Preset" # Đã đổi theo yêu cầu
 
 # --- CẤU HÌNH LINK TRONG NỘI DUNG MAIL ---
 LINK_NOTE = "https://photos.app.goo.gl/xA2x3gRcLWKsXQMAA" # Link từ ảnh sếp
-LINK_VIDEO_TIKTOK = "https://www.tiktok.com/@trung_lightroom/video/7385215457105562898?is_from_webapp=1&sender_device=pc&web_id=7177406567393134081" # Sếp điền link tiktok vào đây
+LINK_VIDEO_TIKTOK = "https://www.tiktok.com/@trung_lightroom/video/7562237003736157460?is_from_webapp=1&sender_device=pc&web_id=7177406567393134081" # Sếp điền link tiktok vào đây
 LINK_VIDEO_HUONG_DAN_MOBILE = "https://www.tiktok.com/@trung_lightroom/video/7275748130144931074?" # Sếp điền link video mobile
 LINK_VIDEO_HUONG_DAN_PC = "https://www.tiktok.com/@trung_lightroom/video/7570758078954605845?is_from_webapp=1&sender_device=pc&web_id=7177406567393134081" # Sếp điền link video PC
 
@@ -99,7 +99,7 @@ def create_html_content(customer_email, product_items):
         <p>Để chọn ảnh phù hợp với preset cũng như chỉnh lại thế nào cho hợp lý thì bạn đọc phần note trong từng preset ở đây nhe: 
         <a href="{LINK_NOTE}">Xem Note Hướng Dẫn</a></p>
         
-        <p>Để sử dụng preset hiệu quả thì bạn cần có kiến thức chỉnh màu cơ bản vì vậy mình đang làm một chuỗi video hướng dẫn cách sử dụng các công cụ trong lightroom bạn có thể xem nó ở đây nhe: 
+        <p>Để sử dụng preset hiệu quả thì bạnvideo này của mình nhe (video sẽ hướng dẫn điều chỉnh lại preset sao cho phù hợp): 
         <a href="{LINK_VIDEO_TIKTOK}">Tiktok Video</a></p>
         
         <p style="color: #673ab7;">Đối với mobile, bạn tải từng file trong mục Preset for mobile về rồi làm theo Video hướng dẫn đây nhe: 
