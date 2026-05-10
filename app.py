@@ -99,7 +99,7 @@ def create_html_content(customer_email, product_items):
         <p>Để chọn ảnh phù hợp với preset cũng như chỉnh lại thế nào cho hợp lý thì bạn đọc phần note trong từng preset ở đây nhe: 
         <a href="{LINK_NOTE}">Xem Note Hướng Dẫn</a></p>
         
-        <p>Để sử dụng preset hiệu quả thì bạnvideo này của mình nhe (video sẽ hướng dẫn điều chỉnh lại preset sao cho phù hợp): 
+        <p>Để sử dụng preset hiệu quả thì bạn tham khảo video này của mình nhe (video sẽ hướng dẫn điều chỉnh lại preset sao cho phù hợp): 
         <a href="{LINK_VIDEO_TIKTOK}">Tiktok Video</a></p>
         
         <p style="color: #673ab7;">Đối với mobile, bạn tải từng file trong mục Preset for mobile về rồi làm theo Video hướng dẫn đây nhe: 
